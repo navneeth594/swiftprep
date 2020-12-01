@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://www.swiftprep.in/stylesheets/styler.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+    <link href= 
+    "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+            rel="stylesheet" /> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src= 
+    "https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"> 
+    </script> 
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178643391-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178643391-1');
+    </script>
+    <!-- Google Analytics -->
+    
+</head>
+<body>
+<div id="comment-o" class="container bootstrap snippets bootdey">
+    <div class="row">
+    <div class="col-md-12">
+        <div class="blog-comment">
+        <h3 style="margin-top: 60px;" class="text-success">Comments</h3>
+                <hr/>
+                <form action ='/view/<%= video._id %>/comment' class="commentform" method ='POST'>
+                  <div class="form-group">
+                    <label for="commentText">Add Comment</label>
+                    <textarea class="form-control" id="commentText" name="comment" rows="3" required></textarea>
+                  </div>
+                  <button class="btn btn-info" type="submit" onclick="return commentValidate()">
+                    Add Comment
+                 </button>
+                </form><br>
+                <ul class="comments">
+                  <% if (typeof video.comments != 'undefined' && video.comments != null) { %>
+                    <% video.comments.forEach(function(comment){ %>
+                <li class="clearfix" id="listt">
+                  <img src="<%= comment.author.dp %>" class="avatar" alt="">
+                  <div class="post-comments">
+                      <p class="meta">
+                        <a href="#"><big><%= comment.author.username %></big></a> 
+                        <%= comment.created.toUTCString() %>
+                          <div style="float: right; margin-top: -45px;" class="btn-group">
+                            <button class="btn btn-primary btn-sm btn-ifr1" type="button" id="<%= comment._id %>" onclick="toggleReplyBox(this.id)">
+                              Reply
+                            </button>
+                            <% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+                            <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                              <form id="delForm" action="/view/<%= video._id %>/<%= comment._id %>?_method=DELETE" method="POST">
+                                <button class="dropdown-item" id="butn-dd" type="submit">Delete</button>
+                              </form>
+                            </div>
+                            <% } %>
+                          </div>
+                      </p>
+                      <p style="white-space: pre-line;"><%= comment.text %></p>
+                  </div>
+                  <% if(comment.replies.length != 0) { %>
+                  <a class="btn btn-info" id="viewallbtn" style='position:relative;transition: .5s ease;left:9%;' data-toggle="collapse" href="#page_<%= comment._id %>" aria-expanded="false" aria-controls="page_<%= comment._id %>"><i class="fa fa-arrow-down"></i>  View <%=comment.replies.length%> Replies</a>
+                  <div class='collapse' id= "page_<%= comment._id %>">
+                  <ul class="comments">
+                      <% comment.replies.forEach(function(reply){ %>
+                      <li class="clearfix">
+                          <img src="<%= reply.author.dp %>" class="avatar" alt="">
+                          <div class="post-comments">
+                              <p class="meta"> 
+                                <a href="#"><big><%= reply.author.username %></big></a>
+                                <%= reply.created.toUTCString() %>
+                                <% if(currentUser && reply.author.id.equals(currentUser._id)){ %>
+                                <div style="float: right; margin-top: -45px;" class="btn-group">
+                                  <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                  </button>
+                                  <div class="dropdown-menu">
+                                <form action="/view/<%= video._id %>/<%= comment._id %>/<%= reply._id %>?_method=DELETE" method="POST">
+                                  <button type="submit" class="dropdown-item">Delete</button>
+                                </form>
+                                  </div>
+                                </div>
+                                <% } %>
+                              </p>
+                              <p style="white-space: pre-line;"><%= reply.text %></p>
+                          </div>
+                      </li> 
+                      <% }) %>
+                  </ul>
+                  </div>
+                  <% } %>
+                  <form action ='/view/<%= video._id %>/<%= comment._id %>/reply' method ='POST' id="<%= comment._id %>" class="<%= comment._id %>" style="display: none;">
+                    <div class="form-group">
+                      <label for="replyText">Add Reply</label>
+                      <textarea class="form-control" id="replyText" name="reply" rows="3" required></textarea>
+                    </div>
+                    <button class="btn btn-info" type="submit" id="<%= comment._id %>" onclick=" return replyValidate(this.id)">
+                       Add Reply
+                    </button>
+                  </form> <br>
+                </li> <% })} %>
+                </ul>
+              </div>
+            </div>
+          </div>
+          </div>
+  <script>
+    function toggleReplyBox(CommentID) {
+        $('.'+CommentID).fadeToggle(500); 
+    }
+    function my_function(){
+        $('#commentmore').load(location.href + ' #commentmore');
+    }
+
+    function commentValidate() {
+        var textval = document.getElementById("commentText").value;
+        if(textval.trim().length != 0) {
+            return true;
+            // document.querySelector(".commentform").submit();
+        } else {
+            return false;
+        }
+    }
+
+    function replyValidate(commentId) {
+        var textval = document.getElementById("replyText").value;
+        if(textval.trim().length == 0) {
+            return false;
+            // document.getElementById(commentId).submit();
+        } else {
+            return true;
+        }
+    }
+  </script>
+  </body>

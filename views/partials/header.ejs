@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftPrep</title>
+      <link rel="shortcut icon" type="image/x-icon" href="https://storage.googleapis.com/swiftprep-web-images/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="https://www.swiftprep.in/stylesheets/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+     
+     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178643391-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178643391-1');
+    </script>
+    <!-- Google Analytics -->
+    
+  </head>
+<body>
+    <div style="width: 82%; margin-left: auto; margin-right: auto;">
+    <nav class="navbar">
+        <a href="/" class="navbar-brand"><img class="logo" src="https://storage.googleapis.com/swiftprep-web-images/logo.png"></a>
+            <% if(!currentUser){ %>
+              <a class="nav-link" href="/google">Login</a>
+            <% } else { %>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <button class="dropdown-item" type="button"><%= currentUser.username %></button>
+                      <div class="dropdown-divider"></div>
+                      <a href="/logout" class=" dropdown-item btn btn-primary">Logout</a>
+                    </div>
+                  </div>
+            <% } %>
+          </div>
+      </nav>
+    </div>

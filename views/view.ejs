@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://www.swiftprep.in/favicon/favicon.ico">
+    <link rel="icon" sizes="16x16 32x32 64x64" href="https://www.swiftprep.in/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="196x196" href="https://www.swiftprep.in/favicon/favicon-192.png">
+    <link rel="icon" type="image/png" sizes="160x160" href="https://www.swiftprep.in/favicon/favicon-160.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://www.swiftprep.in/favicon/favicon-96.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="https://www.swiftprep.in/favicon/favicon-64.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.swiftprep.in/favicon/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.swiftprep.in/favicon/favicon-16.png">
+    <link rel="apple-touch-icon" href="https://www.swiftprep.in/favicon/favicon-57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://www.swiftprep.in/favicon/favicon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://www.swiftprep.in/favicon/favicon-72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://www.swiftprep.in/favicon/favicon-144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="https://www.swiftprep.in/favicon/favicon-60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://www.swiftprep.in/favicon/favicon-120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="https://www.swiftprep.in/favicon/favicon-76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="https://www.swiftprep.in/favicon/favicon-152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.swiftprep.in/favicon/favicon-180.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="https://www.swiftprep.in/favicon/favicon-144.png">
+    <meta name="msapplication-config" content="https://www.swiftprep.in/favicon/browserconfig.xml">
+    <title>SwiftPrep</title>
+    <link rel="stylesheet" type="text/css" href="https://www.swiftprep.in/stylesheets/styler.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+    <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
+    <script>
+      function resizeIframe() {
+        var obj = document.getElementById("commentIframe");
+        obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+      }
+    </script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-178643391-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-178643391-1');
+    </script>
+    <!-- Google Analytics -->
+    
+  </head>
+<body>
+  <div style=" margin-left: auto; margin-right: auto;width:100%;background-color: white;">
+    <nav class="navbar" style="width:80%;margin: auto;">
+        <a href="/" class="navbar-brand"><img class="logo" src="https://storage.googleapis.com/swiftprep-web-images/logo.png"></a>
+            <% if(!currentUser){ %>
+              <a class="nav-link" href="/google">Login</a>
+            <% } else { %>
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Profile
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <button class="dropdown-item" type="button"><%= currentUser.username %></button>
+                      <div class="dropdown-divider"></div>
+                      <a href="/logout" class=" dropdown-item btn">Logout</a>
+                    </div>
+                  </div>
+            <% } %>
+      </nav>
+    </div>
+<div class="vid-ment">
+  <div class="videoo" oncontextmenu="return false">
+      <video id="video1" class="video-js vjs-default-skin vjs-big-play-centered vjs-fluid" controls data-setup='{"playbackRates": [1, 1.25, 1.5, 1.75, 2], "poster": "<%= video.Thumbnail %>"}'>
+          <source src="https://<%= link %>/<%= bucket %>/<%= video.VName %>.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+      </video>
+  </div>
+  <div class="titletext"><%= video.Subject %> - Unit <%= video.Chapter %></div>
+  <div class="mentorcard">
+    <div class="mentorcard-bg"></div>
+    <img src="<%= video.Mentor.dp %>" alt="" class="mentorcard-dp">
+    <div class="mentorcard-name"><%= video.Mentor.name %></div>
+    <div class="mentorcard-coll"><%= video.Mentor.college %> - Sem <%= video.Mentor.sem %></div>
+    <div class="mentorcard-sub"><%= video.Mentor.subject %></div><hr>
+    <div class="mentorcard-desc">
+      <span><i class="fas fa-quote-left"></i> <%= video.Mentor.description %> <i class="fas fa-quote-right"></i></span>
+    </div><hr>
+    <a id="downloadNotes" class="btn btn-info" href="<%= video.Notes %>" download target="_blank"><i class="fas fa-file"></i> Download Notes!</a>
+  </div>
+</div>
+
+<iframe id="commentIframe" src='/view/<%= video._id %>/comment' width="100%" onload="resizeIframe()" onclick="resizeIframe(this)"></iframe>
+<script>
+    function my_function(){
+        $('#commentmore').load(location.href + ' #commentmore');
+    }
+</script>
+
+<script src="https://vjs.zencdn.net/7.8.4/video.js"></script>
+
+<%- include ("./partials/footer") %>
